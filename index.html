@@ -19,13 +19,12 @@
         }
         .container { width: 85%; max-width: 500px; text-align: center; }
         
-        /* Animasi Transisi Part - Dipercepat */
         #part-1 { animation: fadeOutTotal 2s forwards; animation-delay: 22s; }
         #part-2 { display: none; opacity: 0; animation: fadeInTotal 2s forwards; }
 
         .line { display: block; margin-bottom: 15px; opacity: 0; transform: translateY(15px); animation: fadeInUp 1.5s forwards; }
         
-        /* Timing Part 1 - Jeda lebih pendek */
+        /* Timing Part 1 */
         .p1-1 { animation-delay: 0.5s; }
         .p1-2 { animation-delay: 3s; }
         .p1-3 { animation-delay: 5.5s; }
@@ -35,18 +34,18 @@
         .p1-7 { animation-delay: 17.5s; }
         .p1-8 { animation-delay: 20s; }
 
-        /* Timing Part 2 - Jeda lebih pendek */
+        /* Timing Part 2 */
         .p2-1 { animation-delay: 0.5s; }
         .p2-2 { animation-delay: 3.5s; }
-        .p2-3 { animation-delay: 6.5s; }
-        .p2-4 { animation-delay: 10s; }
-        .p2-5 { animation-delay: 13.5s; }
+        .p2-3 { animation-delay: 7s; } /* Sedikit disesuaiin buat kalimat baru */
+        .p2-4 { animation-delay: 10.5s; }
+        .p2-5 { animation-delay: 14s; }
 
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeOutTotal { to { opacity: 0; } }
         @keyframes fadeInTotal { from { opacity: 0; } to { opacity: 1; } }
 
-        #response-section { display: none; margin-top: 20px; animation: fadeInTotal 1.5s forwards; animation-delay: 15s; }
+        #response-section { display: none; margin-top: 20px; animation: fadeInTotal 1.5s forwards; animation-delay: 16s; }
         textarea { width: 100%; height: 70px; background: #111; color: #eee; border: 1px solid #333; padding: 10px; border-radius: 5px; font-family: sans-serif; }
         .send-btn { margin-top: 10px; background: #8b0000; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 3px; }
         
@@ -105,15 +104,13 @@
             overlay.style.display = 'none';
             content.style.display = 'block';
             
-            // Pindah ke part 2 lebih cepet (setelah 24 detik)
             setTimeout(() => {
                 document.getElementById('part-1').style.display = 'none';
                 document.getElementById('part-2').style.display = 'block';
                 
-                // Munculin form pesan segera setelah part 2 beres
                 setTimeout(() => {
                     document.getElementById('response-section').style.display = 'block';
-                }, 15000); 
+                }, 16000); 
             }, 24000); 
         }
     </script>
