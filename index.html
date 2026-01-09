@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untuk Kamu</title>
+    <title>Penyesalanku</title>
     <style>
         body {
             background-color: #050505;
@@ -17,25 +17,11 @@
             overflow: hidden;
             flex-direction: column;
         }
-
-        .container {
-            width: 85%;
-            max-width: 500px;
-            text-align: center;
-            position: relative;
-        }
-
+        .container { width: 85%; max-width: 500px; text-align: center; }
         #part-1 { animation: fadeOutTotal 3s forwards; animation-delay: 35s; }
         #part-2 { display: none; opacity: 0; animation: fadeInTotal 3s forwards; }
-
-        .line {
-            display: block;
-            margin-bottom: 22px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 2.5s forwards;
-        }
-
+        .line { display: block; margin-bottom: 22px; opacity: 0; transform: translateY(20px); animation: fadeInUp 2.5s forwards; }
+        
         /* Timing Part 1 */
         .p1-1 { animation-delay: 1s; }
         .p1-2 { animation-delay: 4.5s; }
@@ -46,7 +32,7 @@
         .p1-7 { animation-delay: 24s; }
         .p1-8 { animation-delay: 29s; }
 
-        /* Timing Part 2 - Lebih Cepat */
+        /* Timing Part 2 */
         .p2-1 { animation-delay: 0.5s; }
         .p2-2 { animation-delay: 4s; }
         .p2-3 { animation-delay: 8s; }
@@ -57,36 +43,11 @@
         @keyframes fadeOutTotal { to { opacity: 0; } }
         @keyframes fadeInTotal { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Form Pesan */
-        #response-section { 
-            display: none; 
-            margin-top: 25px; 
-            animation: fadeInTotal 2s forwards; 
-            animation-delay: 19s; /* Muncul hampir barengan sama kalimat terakhir part 2 */
-        }
+        #response-section { display: none; margin-top: 25px; animation: fadeInTotal 2s forwards; animation-delay: 19s; }
+        textarea { width: 100%; height: 70px; background: #111; color: #eee; border: 1px solid #333; padding: 10px; border-radius: 5px; }
+        .send-btn { margin-top: 10px; background: #8b0000; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 3px; }
         
-        textarea {
-            width: 100%; height: 70px; background: #111; color: #eee;
-            border: 1px solid #333; padding: 10px; margin-top: 10px;
-            font-family: sans-serif; resize: none; border-radius: 5px;
-        }
-        
-        .send-btn {
-            margin-top: 10px; background: #8b0000; color: white;
-            border: none; padding: 10px 20px; cursor: pointer; border-radius: 3px;
-        }
-
-        .broken-heart {
-            position: absolute; color: #1a1a1a; font-size: 18px;
-            pointer-events: none; animation: drift 10s linear infinite;
-        }
-
-        @keyframes drift {
-            0% { transform: translateY(110vh); opacity: 0; }
-            50% { opacity: 0.2; }
-            100% { transform: translateY(-10vh); opacity: 0; }
-        }
-
+        #overlay { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background:#050505; z-index:999; color:#444; cursor:pointer; }
         em { color: #888; }
         .regret { color: #555; font-size: 0.95rem; }
         .highlight { color: #8b0000; font-weight: bold; }
@@ -95,7 +56,11 @@
 </head>
 <body onclick="playMusic()">
 
-    <div class="container">
+    <div id="overlay">
+        <p>Sentuh layar untuk membuka pesan...</p>
+    </div>
+
+    <div class="container" id="main-content" style="display:none;">
         <div id="part-1">
             <span class="line p1-1">Kangen dipanggil sayang, kangen excited pas buka WA...</span>
             <span class="line p1-2">Kangen notif favorit, kangen senyum-senyum sendiri karena salting.</span>
@@ -114,10 +79,9 @@
             <span class="line honest p2-4">Padahal hati ini masih terus menyebut namamu, dan berharap kamu kembali. 🕊️</span>
             <span class="line highlight p2-5">Faktanya, aku emang nggak pernah bisa menerima semua ini. 💔</span>
 
-            <div id="response-section" id="resSec">
-                <p style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">Mungkin kamu ada pesan buat aku?</p>
+            <div id="response-section">
                 <form action="https://formspree.io/f/mlggrevq" method="POST">
-                    <textarea name="pesan_dari_mala" placeholder="Tulis di sini..." required></textarea>
+                    <textarea name="pesan_dari_mala" placeholder="Mungkin kamu ada pesan buat aku?" required></textarea>
                     <button type="submit" class="send-btn">Kirim Pesan</button>
                 </form>
             </div>
@@ -125,38 +89,26 @@
     </div>
 
     <audio id="sadAudio" loop>
-        <source src="https://www.mboxdrive.com/sad-piano-music-despair.mp3" type="audio/mpeg">
+        <source src="Yiruma - River Flows in You.mp3" type="audio/mpeg">
     </audio>
 
     <script>
         const audio = document.getElementById('sadAudio');
-        function playMusic() { audio.play(); }
+        const overlay = document.getElementById('overlay');
+        const content = document.getElementById('main-content');
 
-        window.addEventListener('load', () => {
-            audio.play().catch(() => {});
-            setInterval(createRain, 600);
+        function playMusic() {
+            audio.play();
+            overlay.style.display = 'none';
+            content.style.display = 'block';
             
-            // Transisi ke Part 2 lebih cepat (setelah 38 detik)
             setTimeout(() => {
                 document.getElementById('part-1').style.display = 'none';
                 document.getElementById('part-2').style.display = 'block';
-                
-                // Pastikan bagian respon muncul otomatis
                 setTimeout(() => {
                     document.getElementById('response-section').style.display = 'block';
                 }, 19000); 
-
             }, 38000); 
-        });
-
-        function createRain() {
-            const heart = document.createElement('div');
-            heart.classList.add('broken-heart');
-            heart.innerHTML = '💔';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 5 + 5 + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 10000);
         }
     </script>
 </body>
